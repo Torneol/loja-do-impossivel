@@ -156,7 +156,7 @@
 </header>
 
   <main class="produto-detalhe">
-    <img src="/img/aspirador.png" alt="Aspirador de Emoções Ruins" class="produto-img" />
+    <img src="../img/aspirador.png" alt="Aspirador de Emoções Ruins" class="produto-img" />
     
     <div class="produto-info">
       <p class="preco">R$ 999,00 à vista <br/><span class="parcela">ou 12x de R$ 99,90</span></p>
@@ -166,10 +166,10 @@
       
       Quantidade: <input type="number" id="quantidade-produto" value="1" min="1" style="width: 60px; margin-bottom: 10px;" />
 
-      <button class="btn-comprar" onclick="adicionarAoCarrinho('Aspirador de Emoções Ruins™', 999.00, '/img/aspirador.png')">Adicionar ao Carrinho</button>
+      <button class="btn-comprar" onclick="adicionarAoCarrinho('Aspirador de Emoções Ruins™', 999.00, '../img/aspirador.png')">Adicionar ao Carrinho</button>
 
       <button class="btn-comprar" style="background-color: #3e2a16; margin-left: 10px;" 
-              onclick="comprarAgora('Aspirador de Emoções Ruins™', 999.00, '/img/aspirador.png')">
+              onclick="comprarAgora('Aspirador de Emoções Ruins™', 999.00, '../img/aspirador.png')">
         Comprar Agora
       </button>
     </div>
@@ -257,7 +257,7 @@
 
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
       atualizarContador();
-      alert(${quantidade}x ${nome} adicionado(s) ao carrinho!);
+      alert(`${quantidade}x ${nome} adicionado(s) ao carrinho!`);
       mostrarCarrinho(); // Atualiza painel aberto automaticamente
     }
 
@@ -297,17 +297,17 @@
       carrinho.forEach((item, index) => {
         total += item.preco * item.quantidade;
         const div = document.createElement('div');
-        div.innerHTML = 
+        div.innerHTML = `
           <img src="${item.imagem}" alt="${item.nome}" />
           <strong>${item.nome}</strong><br/>
           Preço unitário: R$ ${item.preco.toFixed(2)}<br/>
           Quantidade: <input type="number" min="1" value="${item.quantidade}" onchange="alterarQuantidade(${index}, this.value)" />
           <button onclick="removerProduto(${index})">Remover</button>
-        ;
+        `;
         container.appendChild(div);
       });
 
-      totalEl.innerText = Total: R$ ${total.toFixed(2)};
+      totalEl.innerText = `Total: R$ ${total.toFixed(2)}`;
       cartPainel.style.display = 'block';
     }
 
