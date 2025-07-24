@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout — Loja do Impossível</title>
+  <link rel="stylesheet" href="../style/style-checkout.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fefdf9;
+      color: #333;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #9147ff;
+    }
+
+    .item {
+      border-bottom: 1px solid #ccc;
+      padding: 1rem 0;
+    }
+
+    #total {
+      margin-top: 2rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      background: #9147ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #6f2bd9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Seu Carrinho</h1>
+  <div id="carrinho-container"></div>
+  <p id="total"></p>
+  <button onclick="finalizarCompra()">Finalizar Compra</button>
+
+  <script>
+    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+    const container = document.getElementById('carrinho-container');
+    const totalContainer = document.getElementById('total');
+    let total = 0;
+
+    if (carrinho.length === 0) {
+      container.innerHTML = "<p>Seu carrinho está vazio. 🫠</p>";
+    } else {
+      carrinho.forEach(produto => {
+        const item = document.createElement("div");
+        item.classList.add("item");
+        item.innerHTML = `<strong>${produto.nome}</strong> — R$ ${produto.preco.toFixed(2)}`;
+        container.appendChild(item);
+        total += produto.preco;
+      });
+
+      totalContainer.innerText = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function finalizarCompra() {
+      alert("Compra finalizada com sucesso! 🪄✨");
+      localStorage.removeItem("carrinho");
+      window.location.href = "../index.html"; // Correção do caminho
+    }
+  </script>
+
+</body>
+</html>
