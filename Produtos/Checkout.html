@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finalizar Compra — Loja do Impossível</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Finalizar Compra</h1>
+  </header>
+
+  <main class="checkout">
+    <div class="produto-resumo">
+      <h2 id="nome-produto">Produto</h2>
+      <p id="descricao-produto"></p>
+      <p id="preco-produto"></p>
+    </div>
+
+    <form class="formulario-compra">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco" name="endereco" required />
+
+      <button type="submit">Confirmar Pedido</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>© 2025 Loja do Impossível</p>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get('produto');
+    const preco = params.get('preco');
+    const descricao = params.get('descricao');
+
+    document.getElementById('nome-produto').innerText = nome || 'Produto misterioso';
+    document.getElementById('preco-produto').innerText = preco ? `R$ ${preco}` : '';
+    document.getElementById('descricao-produto').innerText = descricao || '';
+  </script>
+</body>
+</html>
