@@ -5,361 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aspirador de Emoções Ruins™ — Loja do Impossível</title>
   <link rel="stylesheet" href="../style/style-produto.css" />
-  <style>
-    /* Estilo básico para o carrinho flutuante */
-    #cart-flutuante {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #fff7ec;
-      border: 2px dashed #c5a880;
-      padding: 10px 15px;
-      border-radius: 10px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-      cursor: pointer;
-      z-index: 9999;
-      font-weight: bold;
-      user-select: none;
-    }
-
-    #cart-painel {
-      position: fixed;
-      bottom: 70px;
-      right: 40px;           /* afastado da borda direita */
-      width: 400px;           /* largura maior */
-      max-height: 60vh;       /* altura responsiva para menos scroll */
-      background: #fff7ec;
-      border: 2px dashed #c5a880;
-      border-radius: 10px;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-      overflow-y: auto;
-      padding: 40px 15px 15px 15px; /* espaço maior no topo para botão fechar */
-      display: none;
-      z-index: 10000;
-      box-sizing: border-box;
-    }
-
-    #cart-painel h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
-      color: #5c3d1b;
-      text-align: center;
-    }
-
-    #cart-items-flutuante div {
-      margin-bottom: 10px;
-      border-bottom: 1px solid #c5a880;
-      padding-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    #cart-items-flutuante img {
-      width: 50px;
-      border-radius: 5px;
-    }
-
-    #cart-items-flutuante strong {
-      flex-grow: 1;
-    }
-
-    #cart-items-flutuante input[type="number"] {
-      width: 50px;
-    }
-
-    #cart-items-flutuante button {
-      background: #ff6f61;
-      border: none;
-      color: white;
-      padding: 5px 8px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #cart-total-flutuante {
-      font-weight: bold;
-      margin-top: 15px;
-      color: #3e2a16;
-      text-align: center;
-    }
-
-    /* Botão Comprar chamativo */
-    #cart-painel button.comprar {
-      background: #28a745;
-      color: white;
-      margin-top: 15px;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1.1em;
-      width: 100%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: background-color 0.3s ease;
-      display: block;
-    }
-    #cart-painel button.comprar:hover {
-      background: #218838;
-    }
-
-    /* Botão Limpar menor e secundário */
-    #cart-painel button.limpar {
-      background: #ff4d4d;
-      color: white;
-      margin-top: 10px;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.9em;
-      width: auto;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: none;
-    }
-
-    /* Botão fechar X no topo direito */
-    #cart-painel .fechar-x {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 22px;
-      font-weight: bold;
-      color: #5c3d1b;
-      cursor: pointer;
-      user-select: none;
-      line-height: 1;
-    }
-  </style>
+  <link rel="stylesheet" href="../style/cart.css" />
 </head>
 <body>
-<header style="position: relative; background-color: #fffbe6; padding: 15px 50px;">
-  <a href="../index.html" 
-     style="position: fixed; left: 15px; top: 22px; 
-            text-decoration: none; color: #5c3d1b; 
-            display: flex; align-items: center; gap: 6px; 
-            font-weight: bold; font-size: 1.1em; 
-            background: #fff7ec; padding: 4px 8px; 
-            border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); 
-            z-index: 10000; line-height: 1;">
-    <span style="font-size: 1.4em;">🌀</span>
-    <span>Loja do Impossível</span>
-  </a>
+  <header>
+    <h1><a href="../index.html">Loja do Impossível</a></h1>
+  </header>
 
-  <h1 class="produto-titulo">Garfo Teletransportável™</h1>
-
-</header>
-
-  <main class="produto-detalhe">
-    <img src="../img/aspirador.png" alt="Aspirador de Emoções Ruins" class="produto-img" />
-    
-    <div class="produto-info">
-      <p class="preco">R$ 999,00 à vista <br/><span class="parcela">ou 12x de R$ 99,90</span></p>
-      <p class="descricao-breve">
-        Sucesso absoluto em limpar a sujeira emocional que nem Freud quis lidar.
-      </p>
-      
-      Quantidade: <input type="number" id="quantidade-produto" value="1" min="1" style="width: 60px; margin-bottom: 10px;" />
-
-      <button class="btn-comprar" onclick="adicionarAoCarrinho('Aspirador de Emoções Ruins™', 999.00, '../img/aspirador.png')">Adicionar ao Carrinho</button>
-
-      <button class="btn-comprar" style="background-color: #3e2a16; margin-left: 10px;" 
-              onclick="comprarAgora('Aspirador de Emoções Ruins™', 999.00, '../img/aspirador.png')">
-        Comprar Agora
-      </button>
-    </div>
-
-    <section class="descricao-longa">
-      <h2>Descrição detalhada</h2>
-      <p>“Sucesso absoluto em limpar a sujeira emocional que nem Freud quis lidar.” Engole ressentimentos, culpa ancestral, brigas por herança e aquele incômodo existencial que surge toda segunda de manhã — tudo com um sonoro whoooosh. Ideal para quem quer varrer as mágoas pra debaixo de outra dimensão.</p>
+  <main class="produto-container">
+    <section class="produto-detalhes">
+      <img src="../img/aspirador.png" alt="Aspirador de Emoções Ruins" class="produto-img" />
+      <div class="produto-info">
+        <h2>Aspirador de Emoções Ruins™</h2>
+        <p>Finalmente uma solução para aquele climão que fica no ar. O Aspirador de Emoções Ruins™ detecta, suga e armazena ressentimentos, ironias mal colocadas e vergonha alheia. Compacto, elegante e emocionalmente competente.</p>
+        <p class="preco">R$ 999,00</p>
+        <button class="btn-comprar" onclick="adicionarAoCarrinho('Aspirador de Emoções Ruins™', 999.00, '../img/aspirador.png')">Adicionar ao Carrinho</button>
+        <button class="btn-comprar" style="background-color: #3e2a16; margin-left: 10px;" onclick="comprarAgora('Aspirador de Emoções Ruins™', 999.00, '../img/aspirador.png')">Comprar Agora</button>
+      </div>
     </section>
-<section class="outros-produtos">
-  <h3>Veja também:</h3>
-  <div class="produto-container">
-    <article class="produto">
-      <img src="../img/Desculpinator.png" alt="Desculpinator 3000">
-      <h2>Desculpinator 3000™</h2>
-      <p class="preco-sugerido">R$ 1.999,99</p>
-      <p class="parcelado">ou 10x de R$ 199,99 sem juros</p>
-      <a class="botao-detalhe" href="desculpinator.html">Ver mais</a>
-    </article>
 
-    <article class="produto">
-      <img src="../img/Filtro.png" alt="Filtro Anti-Vacilo">
-      <h2>Filtro Anti-Vacilo™</h2>
-      <p class="preco-sugerido">R$ 499,90</p>
-      <p class="parcelado">ou 10x de R$ 49,99 sem juros</p>
-      <a class="botao-detalhe" href="filtro.html">Ver mais</a>
-    </article>
-
-    <article class="produto">
-      <img src="../img/Garfo.png" alt="Garfo Teletransportável">
-      <h2>Garfo Teletransportável™</h2>
-      <p class="preco-sugerido">R$ 129,90</p>
-      <p class="parcelado">ou 10x de R$ 12,99 sem juros</p>
-      <a class="botao-detalhe" href="garfo.html">Ver mais</a>
-    </article>
-  </div>
-</section>
-
-
+    <section class="outros-produtos">
+      <h3>Outros Itens Impossíveis</h3>
+      <div class="produtos-grid">
+        <article class="produto">
+          <img src="../img/Desculpinator.png" alt="Desculpinator 3000">
+          <h4><a href="desculpinator.html">Desculpinator 3000™</a></h4>
+        </article>
+        <article class="produto">
+          <img src="../img/Filtro.png" alt="Filtro Anti-Vacilo">
+          <h4><a href="filtro.html">Filtro Anti-Vacilo™</a></h4>
+        </article>
+        <article class="produto">
+          <img src="../img/Garfo.png" alt="Garfo Teletransportável">
+          <h4><a href="garfo.html">Garfo Teletransportável™</a></h4>
+        </article>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 Loja do Impossível — Nenhum item funciona, mas todos encantam.</p>
-  </footer>
+  <aside id="cart-flutuante" class="cart-hidden">
+    <h2>🛒 Carrinho</h2>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">Total: R$ 0,00</p>
+    <a href="../checkout.html" class="btn-finalizar">Finalizar Compra</a>
+  </aside>
 
-  <!-- CARRINHO FLUTUANTE -->
-  <div id="cart-flutuante">
-    🛒 Carrinho (<span id="cart-count">0</span>)
-  </div>
+  <button id="btn-toggle-cart">🛒 Carrinho</button>
 
-  <div id="cart-painel">
-    <button class="fechar-x" aria-label="Fechar carrinho" onclick="fecharCarrinho()">×</button>
-    <h3>Seu Carrinho</h3>
-    <div id="cart-items-flutuante"></div>
-    <p id="cart-total-flutuante"></p>
-    <button class="comprar" onclick="finalizarCompra()">Comprar</button>
-    <button class="limpar" onclick="limparCarrinho()">Limpar Carrinho</button>
-  </div>
-
+  <script src="../js/cart.js"></script>
   <script>
-    // Atualiza o contador do carrinho no ícone flutuante
-    function atualizarContador() {
-      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      const count = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
-      document.getElementById('cart-count').innerText = count;
-    }
+    document.getElementById('btn-toggle-cart').addEventListener('click', () => {
+      const cart = document.getElementById('cart-flutuante');
+      cart.classList.toggle('cart-hidden');
+    });
 
-    // Função para adicionar produto ao carrinho
-    function adicionarAoCarrinho(nome, preco, imagem) {
-      const quantidadeInput = document.getElementById('quantidade-produto');
-      const quantidade = parseInt(quantidadeInput.value);
-      if (quantidade <= 0 || isNaN(quantidade)) {
-        alert('Quantidade inválida!');
-        return;
-      }
-
-      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-
-      // Se produto já existe, soma quantidade
-      const index = carrinho.findIndex(item => item.nome === nome);
-      if (index > -1) {
-        carrinho[index].quantidade += quantidade;
-      } else {
-        carrinho.push({ nome, preco, imagem, quantidade });
-      }
-
-      localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      atualizarContador();
-      alert(`${quantidade}x ${nome} adicionado(s) ao carrinho!`);
-      mostrarCarrinho(); // Atualiza painel aberto automaticamente
-    }
-
-    // Função para comprar direto: limpar carrinho e adicionar só esse produto
     function comprarAgora(nome, preco, imagem) {
-      const produto = { nome, preco, imagem, quantidade: 1 };
-      localStorage.setItem('carrinho', JSON.stringify([produto]));
-      // Redireciona para checkout (você pode adaptar essa URL)
+      adicionarAoCarrinho(nome, preco, imagem);
       window.location.href = '../checkout.html';
     }
-
-    // Mostrar/ocultar painel do carrinho
-    const cartFlutuante = document.getElementById('cart-flutuante');
-    const cartPainel = document.getElementById('cart-painel');
-
-    cartFlutuante.onclick = function() {
-      if (cartPainel.style.display === 'none' || cartPainel.style.display === '') {
-        mostrarCarrinho();
-      } else {
-        fecharCarrinho();
-      }
-    }
-
-    function mostrarCarrinho() {
-      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      const container = document.getElementById('cart-items-flutuante');
-      const totalEl = document.getElementById('cart-total-flutuante');
-      container.innerHTML = '';
-
-      if (carrinho.length === 0) {
-        container.innerHTML = '<p>Seu carrinho está vazio 😢</p>';
-        totalEl.innerText = '';
-        return;
-      }
-
-      let total = 0;
-      carrinho.forEach((item, index) => {
-        total += item.preco * item.quantidade;
-        const div = document.createElement('div');
-        div.innerHTML = `
-          <img src="${item.imagem}" alt="${item.nome}" />
-          <strong>${item.nome}</strong><br/>
-          Preço unitário: R$ ${item.preco.toFixed(2)}<br/>
-          Quantidade: <input type="number" min="1" value="${item.quantidade}" onchange="alterarQuantidade(${index}, this.value)" />
-          <button onclick="removerProduto(${index})">Remover</button>
-        `;
-        container.appendChild(div);
-      });
-
-      totalEl.innerText = `Total: R$ ${total.toFixed(2)}`;
-      cartPainel.style.display = 'block';
-    }
-
-    function fecharCarrinho() {
-      cartPainel.style.display = 'none';
-    }
-
-    function removerProduto(index) {
-      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      carrinho.splice(index, 1);
-      localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      atualizarContador();
-      mostrarCarrinho();
-    }
-
-    function alterarQuantidade(index, novaQuantidade) {
-      let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      novaQuantidade = parseInt(novaQuantidade);
-      if (novaQuantidade < 1 || isNaN(novaQuantidade)) {
-        alert('Quantidade inválida!');
-        mostrarCarrinho();
-        return;
-      }
-      carrinho[index].quantidade = novaQuantidade;
-      localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      atualizarContador();
-      mostrarCarrinho();
-    }
-
-    function limparCarrinho() {
-      localStorage.removeItem('carrinho');
-      atualizarContador();
-      mostrarCarrinho();
-    }
-
-    // Função para finalizar compra dentro do painel (alert + limpa carrinho)
-    function finalizarCompra() {
-      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      if (carrinho.length === 0) {
-        alert('Seu carrinho está vazio!');
-        return;
-      }
-      alert('Compra finalizada com sucesso! 🪄✨');
-      localStorage.removeItem('carrinho');
-      atualizarContador();
-      fecharCarrinho();
-      // Aqui pode redirecionar para página real de checkout
-      // window.location.href = '../checkout.html';
-    }
-
-    // Inicializa contador ao carregar a página
-    atualizarContador();
   </script>
 </body>
 </html>
