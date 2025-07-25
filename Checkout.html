@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Checkout — Loja do Impossível</title>
-  <link rel="stylesheet" href="../style/style-checkout.css" />
+  <link rel="stylesheet" href="style/style-checkout.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,11 +14,11 @@
     }
 
     h1 {
-      color: #9147ff;
+      color: #a67c00;
     }
 
     .item {
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #c5a880;
       padding: 1rem 0;
     }
 
@@ -25,26 +26,29 @@
       margin-top: 2rem;
       font-weight: bold;
       font-size: 1.2rem;
+      color: #3e2a16;
     }
 
     button {
       margin-top: 2rem;
       padding: 0.8rem 1.5rem;
       font-size: 1rem;
-      background: #9147ff;
+      background: #a67c00;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background: #6f2bd9;
+      background: #8a6400;
     }
   </style>
 </head>
-<body>
 
+<body>
   <h1>Seu Carrinho</h1>
   <div id="carrinho-container"></div>
   <p id="total"></p>
@@ -63,9 +67,14 @@
       carrinho.forEach(produto => {
         const item = document.createElement("div");
         item.classList.add("item");
-        item.innerHTML = `<strong>${produto.nome}</strong> — R$ ${produto.preco.toFixed(2)}`;
+        item.innerHTML = `
+          <strong>${produto.nome}</strong><br/>
+          Quantidade: ${produto.quantidade}<br/>
+          Preço unitário: R$ ${produto.preco.toFixed(2)}<br/>
+          Subtotal: R$ ${(produto.preco * produto.quantidade).toFixed(2)}
+        `;
         container.appendChild(item);
-        total += produto.preco;
+        total += produto.preco * produto.quantidade;
       });
 
       totalContainer.innerText = `Total: R$ ${total.toFixed(2)}`;
@@ -74,9 +83,9 @@
     function finalizarCompra() {
       alert("Compra finalizada com sucesso! 🪄✨");
       localStorage.removeItem("carrinho");
-      window.location.href = "../index.html"; // Correção do caminho
+      window.location.href = "index.html";
     }
   </script>
-
 </body>
+
 </html>
