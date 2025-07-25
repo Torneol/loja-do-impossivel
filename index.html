@@ -222,50 +222,60 @@
     <p>Onde o absurdo vira presente</p>
   </header>
 
-  <main class="produto-container">
-    <article class="produto">
-      <img src="img/Desculpinator.png" alt="Desculpinator 3000" />
-      <h2>Desculpinator 3000™</h2>
-      <p class="preco">R$ 299,00 à vista<br><span class="parcela">ou 10x de R$ 34,90</span></p>
-      <p class="descricao">Dispara desculpas automáticas em situações embaraçosas.</p>
-      <a class="botao-detalhe" href="Produtos/desculpinator.html">Ver mais</a>
-      <br/>
-      <button class="botao-adicionar" onclick="adicionarAoCarrinho('Desculpinator 3000™', 299.00, 'img/Desculpinator.png')">Adicionar ao Carrinho</button>
-      <button class="botao-comprar-agora" onclick="comprarAgora('Desculpinator 3000™', 299.00, 'img/Desculpinator.png')">Comprar Agora</button>
-    </article>
+<main class="produto-container">
+  <article class="produto">
+    <img src="img/Desculpinator.png" alt="Desculpinator 3000" />
+    <h2>Desculpinator 3000™</h2>
+    <p class="preco">R$ 299,00 à vista<br><span class="parcela">ou 10x de R$ 34,90</span></p>
+    <p class="descricao">Dispara desculpas automáticas em situações embaraçosas.</p>
 
-    <article class="produto">
-      <img src="img/Garfo.png" alt="Garfo Teletransportável" />
-      <h2>Garfo Teletransportável™</h2>
-      <p class="preco">R$ 159,00 à vista<br><span class="parcela">ou 5x de R$ 35,80</span></p>
-      <p class="descricao">Ele aparece no seu prato... mesmo se estiver na sala!</p>
-      <a class="botao-detalhe" href="Produtos/garfo.html">Ver mais</a>
-      <br/>
-      <button class="botao-adicionar" onclick="adicionarAoCarrinho('Garfo Teletransportável™', 159.00, 'img/Garfo.png')">Adicionar ao Carrinho</button>
-      <button class="botao-comprar-agora" onclick="comprarAgora('Garfo Teletransportável™', 159.00, 'img/Garfo.png')">Comprar Agora</button>
-    </article>
+<div class="botoes-empilhados">
+  <button class="botao-comprar-agora" onclick="comprarAgora('Desculpinator 3000™', 299.00, 'img/Desculpinator.png')">Comprar Agora</button>
+  <button class="botao-adicionar" onclick="adicionarAoCarrinho('Desculpinator 3000™', 299.00, 'img/Desculpinator.png')">Adicionar ao Carrinho</button>
+  <a class="botao-detalhe" href="Produtos/desculpinator.html">Ver mais</a>
+</div>
 
-    <article class="produto">
-      <img src="img/aspirador.png" alt="Aspirador de Pensamentos" />
-      <h2>Aspirador de Pensamentos™</h2>
-      <p class="preco">R$ 999,00 à vista<br><span class="parcela">ou 12x de R$ 99,90</span></p>
-      <p class="descricao">Limpa memórias indesejadas com apenas um clique.</p>
-      <a class="botao-detalhe" href="Produtos/aspirador.html">Ver mais</a>
-      <br/>
-     <button class="botao-adicionar" onclick="adicionarAoCarrinho('Aspirador de Pensamentos™', 999.00, 'img/aspirador.png')">Adicionar ao Carrinho</button>
-<button class="botao-comprar-agora" onclick="comprarAgora('Aspirador de Pensamentos™', 999.00, 'img/aspirador.png')">Comprar Agora</button>
-    </article>
+  </article>
 
-    <article class="produto">
-      <img src="img/Filtro.png" alt="Filtro Anti-Vacilo" />
-      <h2>Filtro Anti-Vacilo™</h2>
-      <p class="preco">R$ 89,00 à vista<br><span class="parcela">ou 3x de R$ 31,00</span></p>
-      <p class="descricao">Remove 98% dos vacilos antes de serem cometidos.</p>
-      <a class="botao-detalhe" href="Produtos/filtro.html">Ver mais</a>
-      <br/>
-      <button class="botao-adicionar" onclick="adicionarAoCarrinho('Filtro Anti-Vacilo™', 89.00, 'img/Filtro.png')">Adicionar ao Carrinho</button>
-      <button class="botao-comprar-agora" onclick="comprarAgora('Filtro Anti-Vacilo™', 89.00, 'img/Filtro.png')">Comprar Agora</button>
-    </article>
+  <article class="produto">
+  <img src="img/Garfo.png" alt="Garfo Teletransportável" />
+  <h2>Garfo Teletransportável™</h2>
+  <p class="preco">R$ 159,00 à vista<br><span class="parcela">ou 5x de R$ 35,80</span></p>
+  <p class="descricao">Ele aparece no seu prato... mesmo se estiver na sala!</p>
+
+  <div class="botoes-empilhados">
+    <button class="botao-comprar-agora" onclick="comprarAgora('Garfo Teletransportável™', 159.00, 'img/Garfo.png')">Comprar Agora</button>
+    <button class="botao-adicionar" onclick="adicionarAoCarrinho('Garfo Teletransportável™', 159.00, 'img/Garfo.png')">Adicionar ao Carrinho</button>
+    <a class="botao-detalhe" href="Produtos/garfo.html">Ver mais</a>
+  </div>
+</article>
+
+<article class="produto">
+  <img src="img/Aspirador.png" alt="Aspirador de Pensamentos" />
+  <h2>Aspirador de Pensamentos™</h2>
+  <p class="preco">R$ 999,00 à vista<br><span class="parcela">ou 12x de R$ 99,90</span></p>
+  <p class="descricao">Limpa memórias indesejadas com apenas um clique.</p>
+
+  <div class="botoes-empilhados">
+    <button class="botao-comprar-agora" onclick="comprarAgora('Aspirador de Pensamentos™', 999.00, 'img/Aspirador.png')">Comprar Agora</button>
+    <button class="botao-adicionar" onclick="adicionarAoCarrinho('Aspirador de Pensamentos™', 999.00, 'img/Aspirador.png')">Adicionar ao Carrinho</button>
+    <a class="botao-detalhe" href="Produtos/aspirador.html">Ver mais</a>
+  </div>
+</article>
+
+<article class="produto">
+  <img src="img/Filtro.png" alt="Filtro Anti-Vacilo" />
+  <h2>Filtro Anti-Vacilo™</h2>
+  <p class="preco">R$ 89,00 à vista<br><span class="parcela">ou 3x de R$ 31,00</span></p>
+  <p class="descricao">Remove 98% dos vacilos antes de serem cometidos.</p>
+
+  <div class="botoes-empilhados">
+    <button class="botao-comprar-agora" onclick="comprarAgora('Filtro Anti-Vacilo™', 89.00, 'img/Filtro.png')">Comprar Agora</button>
+    <button class="botao-adicionar" onclick="adicionarAoCarrinho('Filtro Anti-Vacilo™', 89.00, 'img/Filtro.png')">Adicionar ao Carrinho</button>
+    <a class="botao-detalhe" href="Produtos/filtro.html">Ver mais</a>
+  </div>
+</article>
+
   </main>
 
   <footer>
