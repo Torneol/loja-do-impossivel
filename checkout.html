@@ -11,10 +11,34 @@
       background: #fefdf9;
       color: #333;
       padding: 2rem;
+      max-width: 800px;
+      margin: auto;
     }
 
-    h1 {
+    h1, h2 {
       color: #a67c00;
+    }
+
+    form {
+      background: #fffaf0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border: 1px solid #c5a880;
+      border-radius: 6px;
     }
 
     .item {
@@ -49,12 +73,37 @@
 </head>
 
 <body>
-  <h1>Seu Carrinho</h1>
+  <h1>Finalizar Compra</h1>
+
+  <form id="checkout-form">
+    <h2>Seus Dados</h2>
+    <label for="nome">Nome completo</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="endereco">Endereço</label>
+    <input type="text" id="endereco" name="endereco" required>
+
+    <label for="cep">CEP</label>
+    <input type="text" id="cep" name="cep" required>
+  </form>
+
+  <h2>Seu Carrinho</h2>
   <div id="carrinho-container"></div>
   <p id="total"></p>
   <button onclick="finalizarCompra()">Finalizar Compra</button>
 
   <script>
+    // Limpa carrinho se veio da tela anterior
+function finalizarCompra() {
+  alert("Compra finalizada com sucesso! 🪄✨");
+  localStorage.removeItem("carrinho");
+  window.location.href = "index.html";
+}
+
+
     const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
     const container = document.getElementById('carrinho-container');
@@ -81,6 +130,24 @@
     }
 
     function finalizarCompra() {
+      const form = document.getElementById('checkout-form');
+      const campos = form.querySelectorAll('input');
+      let validado = true;
+
+      campos.forEach(campo => {
+        if (!campo.value.trim()) {
+          campo.style.border = '2px solid red';
+          validado = false;
+        } else {
+          campo.style.border = '';
+        }
+      });
+
+      if (!validado) {
+        alert('Por favor, preencha todos os campos corretamente.');
+        return;
+      }
+
       alert("Compra finalizada com sucesso! 🪄✨");
       localStorage.removeItem("carrinho");
       window.location.href = "index.html";
@@ -89,3 +156,4 @@
 </body>
 
 </html>
+
