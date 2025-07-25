@@ -409,29 +409,30 @@ margin: 10px auto 0 auto;
       mostrarCarrinho();
     }
 
-    function limparCarrinho() {
-      localStorage.removeItem('carrinho');
-      atualizarContador();
-      mostrarCarrinho();
-    }
+   function limparCarrinho() {
+  localStorage.removeItem('carrinho');
+  atualizarContador();
+  mostrarCarrinho();
+}
 
-    // Função para finalizar compra dentro do painel (alert + limpa carrinho)
-    function finalizarCompra() {
-      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-      if (carrinho.length === 0) {
-        alert('Seu carrinho está vazio!');
-        return;
-      }
-      alert('Compra finalizada com sucesso! 🪄✨');
-      localStorage.removeItem('carrinho');
-      atualizarContador();
-      fecharCarrinho();
-      // Aqui pode redirecionar para página real de checkout
-      // window.location.href = 'checkout.html';
-    }
+// Função para finalizar compra dentro do painel (alert + limpa carrinho depois no checkout)
+function finalizarCompra() {
+  const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+  if (carrinho.length === 0) {
+    alert('Seu carrinho está vazio!');
+    return;
+  }
+  alert('Compra finalizada com sucesso! 🪄✨');
 
-    // Inicializa contador ao carregar a página
-    atualizarContador();
+  // Define flag para limpar carrinho na próxima página (checkout)
+  sessionStorage.setItem('limparCarrinho', 'true');
+
+  fecharCarrinho();
+  window.location.href = 'checkout.html'; // redireciona sem limpar agora
+}
+
+// Inicializa contador ao carregar a página
+atualizarContador();
   </script>
 </body>
 </html>
