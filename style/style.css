@@ -89,7 +89,6 @@ header p {
 }
 
 .botao-detalhe {
-  display: inline-block;
   padding: 12px 28px;
   background: #a67c00;
   color: #fff;
@@ -100,6 +99,11 @@ header p {
   box-shadow: 0 5px 15px rgba(166, 124, 0, 0.4);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   font-family: 'Segoe UI', sans-serif;
+   width: 200px;
+  text-align: center;
+  display: block;
+margin: 10px auto 0 auto;
+
 }
 
 .botao-detalhe:hover {
