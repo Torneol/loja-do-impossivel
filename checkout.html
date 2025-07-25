@@ -76,36 +76,33 @@
   <h1>Finalizar Compra</h1>
 
   <form id="checkout-form">
-    <h2>Seus Dados</h2>
-    <label for="nome">Nome completo</label>
-    <input type="text" id="nome" name="nome" required>
+    <fieldset>
+      <legend><h2>Seus Dados</h2></legend>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="nome" required>
 
-    <label for="endereco">Endereço</label>
-    <input type="text" id="endereco" name="endereco" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
 
-    <label for="cep">CEP</label>
-    <input type="text" id="cep" name="cep" required>
+      <label for="endereco">Endereço</label>
+      <input type="text" id="endereco" name="endereco" required>
+
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" name="cep" required>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>Seu Carrinho</h2></legend>
+      <div id="carrinho-container"></div>
+      <p id="total"></p>
+    </fieldset>
+
+    <button type="submit">Finalizar Compra</button>
   </form>
 
-  <h2>Seu Carrinho</h2>
-  <div id="carrinho-container"></div>
-  <p id="total"></p>
-  <button onclick="finalizarCompra()">Finalizar Compra</button>
-
   <script>
-    // Limpa carrinho se veio da tela anterior
-function finalizarCompra() {
-  alert("Compra finalizada com sucesso! 🪄✨");
-  localStorage.removeItem("carrinho");
-  window.location.href = "index.html";
-}
-
-
     const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-
     const container = document.getElementById('carrinho-container');
     const totalContainer = document.getElementById('total');
     let total = 0;
@@ -129,9 +126,10 @@ function finalizarCompra() {
       totalContainer.innerText = `Total: R$ ${total.toFixed(2)}`;
     }
 
-    function finalizarCompra() {
-      const form = document.getElementById('checkout-form');
-      const campos = form.querySelectorAll('input');
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const campos = this.querySelectorAll('input');
       let validado = true;
 
       campos.forEach(campo => {
@@ -148,12 +146,12 @@ function finalizarCompra() {
         return;
       }
 
+      // Aqui futuramente você pode fazer o envio para o backend usando fetch/ajax
       alert("Compra finalizada com sucesso! 🪄✨");
       localStorage.removeItem("carrinho");
       window.location.href = "index.html";
-    }
+    });
   </script>
 </body>
 
 </html>
-
