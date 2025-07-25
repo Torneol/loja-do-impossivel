@@ -71,6 +71,25 @@
     }
   </style>
 </head>
+<script>
+  function prepararPedido() {
+    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    if (carrinho.length === 0) {
+      alert('Seu carrinho está vazio!');
+      return false;
+    }
+
+    const produtos = carrinho.map(item => `${item.nome} (x${item.quantidade})`).join(', ');
+    const total = carrinho.reduce((soma, item) => soma + (item.preco * item.quantidade), 0).toFixed(2);
+
+    document.getElementById('input-produtos').value = produtos;
+    document.getElementById('input-total').value = total;
+
+    // Apaga o carrinho só depois de enviar o pedido
+    localStorage.removeItem('carrinho');
+    return true;
+  }
+</script>
 
 <body>
   <h1>Finalizar Compra</h1>
