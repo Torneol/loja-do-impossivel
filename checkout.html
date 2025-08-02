@@ -1,190 +1,637 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5V9B33LZ');</script>
-<!-- End Google Tag Manager -->
+    <meta charset="UTF-8" />
+    <title>Checkout — Loja do Impossível</title>
+    <link rel="stylesheet" href="style/style-checkout.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fefdf9;
+            color: #333;
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+            position: relative;
+            padding-top: 70px;
+        }
 
-  <meta charset="UTF-8">
-  <title>Checkout — Loja do Impossível</title>
-  <link rel="stylesheet" href="style/style-checkout.css" />
-  <style>
-    body
-{
-      font-family: Arial, sans-serif;
-      background: #fefdf9;
-      color: #333;
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
+        h1, h2 {
+            color: #a67c00;
+        }
 
-    h1, h2 {
-      color: #a67c00;
-    }
+        form {
+            background: #fffaf0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
 
-    form {
-      background: #fffaf0;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      margin-bottom: 2rem;
-    }
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: bold;
-    }
+        input, select {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            border: 1px solid #c5a880;
+            border-radius: 6px;
+        }
+        
+        input.invalid-field {
+            border: 2px solid red !important;
+        }
 
-    input {
-      width: 100%;
-      padding: 0.6rem;
-      margin-bottom: 1rem;
-      border: 1px solid #c5a880;
-      border-radius: 6px;
-    }
+        .item {
+            border-bottom: 1px solid #c5a880;
+            padding: 1rem 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-    .item {
-      border-bottom: 1px solid #c5a880;
-      padding: 1rem 0;
-    }
+        .item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-    #total {
-      margin-top: 2rem;
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #3e2a16;
-    }
+        .item .item-details {
+            flex-grow: 1;
+        }
 
-    button {
-      margin-top: 2rem;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      background: #a67c00;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
-    }
+        .item .item-details strong {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-    button:hover {
-      background: #8a6400;
-    }
-  </style>
+        .item .item-details p {
+            margin: 0;
+        }
+
+        .item .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .item button {
+            background: transparent;
+            border: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #a67c00;
+            transition: color 0.3s ease;
+            line-height: 1;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .item button:hover {
+            color: #8a6400;
+        }
+        
+        .item .btn-remover {
+            font-size: 1.1rem;
+            color: #999;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0 6px;
+            transition: color 0.3s ease;
+        }
+
+        .item .btn-remover:hover {
+            color: #a67c00;
+        }
+        
+        /* Estilos do resumo de valores */
+        #resumo-valores {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #fff7ec;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
+        }
+        #resumo-valores .linha-valor {
+            display: flex;
+            justify-content: space-between;
+        }
+        #resumo-valores #total-geral {
+            font-size: 1.4rem;
+            color: #a67c00;
+            margin-top: 10px;
+            font-weight: bold;
+            padding-top: 10px;
+            border-top: 1px dashed #c5a880;
+        }
+
+        button[type="submit"] {
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background: #a67c00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover:not(:disabled) {
+            background: #8a6400;
+        }
+
+        button[type="submit"]:disabled {
+            background: #cfc1a1;
+            cursor: not-allowed;
+        }
+
+        .frete-secao {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #fffbe6;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .frete-secao h3 {
+            margin-bottom: 1rem;
+            color: #5c3d1b;
+        }
+        
+        .frete-opcao {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #c5a880;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .frete-opcao:hover {
+            background: #fcf6e7;
+        }
+
+        .frete-opcao input[type="radio"] {
+            width: auto;
+            margin-right: 15px;
+        }
+        
+        .frete-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.4;
+        }
+        .frete-info strong {
+            color: #3e2a16;
+        }
+        .frete-info span {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #fffbe6;
+            padding: 15px 50px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+        }
+
+        header a {
+            position: fixed;
+            left: 15px;
+            top: 22px;
+            text-decoration: none;
+            color: #5c3d1b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 1.1em;
+            background: #fff7ec;
+            padding: 4px 8px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1;
+        }
+
+        header a span:first-child {
+            font-size: 1.4em;
+        }
+    </style>
 </head>
-<script>
-  function prepararPedido() {
-    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    if (carrinho.length === 0) {
-      alert('Seu carrinho está vazio!');
-      return false;
-    }
-
-    const produtos = carrinho.map(item => `${item.nome} (x${item.quantidade})`).join(', ');
-    const total = carrinho.reduce((soma, item) => soma + (item.preco * item.quantidade), 0).toFixed(2);
-
-    document.getElementById('input-produtos').value = produtos;
-    document.getElementById('input-total').value = total;
-
-    // Apaga o carrinho só depois de enviar o pedido
-    localStorage.removeItem('carrinho');
-    return true;
-  }
-</script>
 
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5V9B33LZ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <header>
+        <a href="index.html">
+            <span>🌀</span>
+            <span>Loja do Impossível</span>
+        </a>
+    </header>
 
-  <h1>Finalizar Compra</h1>
+    <h1>Finalizar Compra</h1>
 
-  <form id="checkout-form">
-    <fieldset>
-      <legend><h2>Seus Dados</h2></legend>
+    <div id="carrinho-container">
+        <h2>Seu Carrinho</h2>
+        <div id="carrinho"></div>
+        
+        <div class="frete-secao">
+            <h3>CEP e Frete</h3>
+            <label for="cep">CEP para cálculo do frete:</label>
+            <input type="text" id="cep" name="cep" maxlength="9" placeholder="00000-000" required />
+            <div id="resultado-frete"></div>
+        </div>
 
-      <label for="nome">Nome completo</label>
-      <input type="text" id="nome" name="nome" required>
+        <div id="resumo-valores">
+            <div id="total-produtos-resumo" class="linha-valor"></div>
+            <div id="frete-resumo" class="linha-valor"></div>
+            <div id="total-geral" class="linha-valor"></div>
+        </div>
+    </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+    <form id="checkout-form" method="POST" action="salvar_pedido.php">
+        <fieldset>
+            <legend>
+                <h2>Informações de Contato e Endereço</h2>
+            </legend>
 
-      <label for="endereco">Endereço</label>
-      <input type="text" id="endereco" name="endereco" required>
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" required />
 
-      <label for="cep">CEP</label>
-      <input type="text" id="cep" name="cep" required>
-    </fieldset>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
 
-    <fieldset>
-      <legend><h2>Seu Carrinho</h2></legend>
-      <div id="carrinho-container"></div>
-      <p id="total"></p>
-    </fieldset>
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone" required />
 
-    <button type="submit">Finalizar Compra</button>
-  </form>
+            <label for="rua">Rua</label>
+            <input type="text" id="rua" name="rua" required />
 
-  <script>
-    const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-    const container = document.getElementById('carrinho-container');
-    const totalContainer = document.getElementById('total');
-    let total = 0;
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" required />
 
-    if (carrinho.length === 0) {
-      container.innerHTML = "<p>Seu carrinho está vazio. 🫠</p>";
-    } else {
-      carrinho.forEach(produto => {
-        const item = document.createElement("div");
-        item.classList.add("item");
-        item.innerHTML = `
-          <strong>${produto.nome}</strong><br/>
-          Quantidade: ${produto.quantidade}<br/>
-          Preço unitário: R$ ${produto.preco.toFixed(2)}<br/>
-          Subtotal: R$ ${(produto.preco * produto.quantidade).toFixed(2)}
-        `;
-        container.appendChild(item);
-        total += produto.preco * produto.quantidade;
-      });
+            <label for="complemento">Complemento (opcional)</label>
+            <input type="text" id="complemento" name="complemento" />
 
-      totalContainer.innerText = `Total: R$ ${total.toFixed(2)}`;
-    }
+            <label for="bairro">Bairro</label>
+            <input type="text" id="bairro" name="bairro" required />
 
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
-      e.preventDefault();
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" required />
 
-      const campos = this.querySelectorAll('input');
-      let validado = true;
+            <label for="estado">Estado (UF)</label>
+            <input type="text" id="estado" name="estado" maxlength="2" required />
+        </fieldset>
 
-      campos.forEach(campo => {
-        if (!campo.value.trim()) {
-          campo.style.border = '2px solid red';
-          validado = false;
-        } else {
-          campo.style.border = '';
+        <input type="hidden" id="frete-escolhido" name="freteEscolhido" />
+        <input type="hidden" id="input-produtos" name="produtos" />
+        <input type="hidden" id="input-total" name="total" />
+        <input type="hidden" id="input-frete-detalhes" name="freteDetalhes" />
+
+        <button type="submit" id="btn-finalizar" disabled>Finalizar Compra</button>
+    </form>
+
+    <script>
+        const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        const container = document.getElementById("carrinho");
+        const totalProdutosResumo = document.getElementById("total-produtos-resumo");
+        const freteResumo = document.getElementById("frete-resumo");
+        const totalGeralResumo = document.getElementById("total-geral");
+        const btnFinalizar = document.getElementById("btn-finalizar");
+        const resultadoFrete = document.getElementById("resultado-frete");
+        const cepInput = document.getElementById("cep");
+        const ruaInput = document.getElementById("rua");
+        const bairroInput = document.getElementById("bairro");
+        const cidadeInput = document.getElementById("cidade");
+        const estadoInput = document.getElementById("estado");
+
+        let totalProdutos = 0;
+        let freteSelecionado = null;
+
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
         }
-      });
 
-      if (!validado) {
-        alert('Por favor, preencha todos os campos corretamente.');
-        return;
-      }
+        function preencherEndereco(data) {
+            if (!data.erro) {
+                ruaInput.value = data.logradouro || '';
+                bairroInput.value = data.bairro || '';
+                cidadeInput.value = data.localidade || '';
+                estadoInput.value = data.uf || '';
+                document.getElementById('numero').focus();
+            } else {
+                ruaInput.value = '';
+                bairroInput.value = '';
+                cidadeInput.value = '';
+                estadoInput.value = '';
+                alert("CEP não encontrado.");
+            }
+        }
 
-      // Aqui futuramente você pode fazer o envio para o backend usando fetch/ajax
-      alert("Compra finalizada com sucesso! 🪄✨");
-      localStorage.removeItem("carrinho");
-      window.location.href = "index.html";
-    });
-  </script>
+        async function buscarEndereco(cep) {
+            const url = `https://viacep.com.br/ws/${cep}/json/`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                preencherEndereco(data);
+            } catch (error) {
+                console.error("Erro ao buscar CEP:", error);
+                alert("Erro ao buscar endereço. Tente novamente.");
+            }
+        }
+
+        function atualizarCarrinhoVisual() {
+            container.innerHTML = "";
+            totalProdutos = 0;
+
+            if (carrinho.length === 0) {
+                container.innerHTML = "<p>Seu carrinho está vazio. 🫠</p>";
+                btnFinalizar.disabled = true;
+                resultadoFrete.innerHTML = "";
+                freteSelecionado = null;
+                document.getElementById("frete-escolhido").value = "";
+                document.getElementById("carrinho-container").style.display = "block";
+                atualizarResumoValores();
+                return;
+            }
+
+            document.getElementById("carrinho-container").style.display = "block";
+
+            carrinho.forEach((produto, index) => {
+                const item = document.createElement("div");
+                item.classList.add("item");
+
+                const nome = produto.nome || 'Produto Indefinido';
+                const quantidade = produto.quantidade || 1;
+                const preco = produto.preco || 0;
+
+                item.innerHTML = `
+                    <img src="${produto.imagem}" alt="${nome}" />
+                    <div class="item-details">
+                        <strong>${nome}</strong>
+                        <p>Preço unitário: R$ ${preco.toFixed(2)}</p>
+                        <p>Subtotal: R$ ${(preco * quantidade).toFixed(2)}</p>
+                    </div>
+                    <div class="quantity-control">
+                        <button type="button" onclick="alterarQuantidade(${index}, -1)">–</button>
+                        <span id="quant-${index}">${quantidade}</span>
+                        <button type="button" onclick="alterarQuantidade(${index}, 1)">+</button>
+                    </div>
+                    <button type="button" class="btn-remover" onclick="removerItem(${index})" title="Remover item">×</button>
+                `;
+
+                container.appendChild(item);
+                totalProdutos += preco * quantidade;
+            });
+
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            atualizarResumoValores();
+            recalcularFreteSePuder();
+        }
+
+        function alterarQuantidade(index, delta) {
+            carrinho[index].quantidade += delta;
+
+            if (carrinho[index].quantidade <= 0) {
+                carrinho.splice(index, 1);
+            }
+
+            atualizarCarrinhoVisual();
+        }
+
+        function removerItem(index) {
+            carrinho.splice(index, 1);
+            atualizarCarrinhoVisual();
+        }
+
+        const recalcularFreteSePuder = debounce(async () => {
+            const cepLimpo = cepInput.value.replace(/\D/g, "");
+            if (cepLimpo.length === 8 && carrinho.length > 0) {
+                await calcularFrete(cepLimpo);
+            } else {
+                resultadoFrete.innerHTML = "<p>Digite seu CEP para calcular o frete.</p>";
+                btnFinalizar.disabled = true;
+                freteSelecionado = null;
+                atualizarResumoValores();
+            }
+        }, 500);
+
+        async function calcularFrete(cep) {
+            if (carrinho.length === 0) {
+                resultadoFrete.innerHTML = "<p>Seu carrinho está vazio. Adicione produtos para calcular o frete.</p>";
+                return;
+            }
+
+            resultadoFrete.innerHTML = "<p>Calculando frete...</p>";
+            btnFinalizar.disabled = true;
+            freteSelecionado = null;
+
+            try {
+                const produtosAPI = carrinho.map(item => ({
+                    id: item.id || item.nome.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+                    width: parseFloat(item.width) || 10,
+                    height: parseFloat(item.height) || 10,
+                    length: parseFloat(item.length) || 10,
+                    weight: parseFloat(item.weight) || 0.1,
+                    unitary_value: parseFloat(item.preco) || 0,
+                    quantity: parseInt(item.quantidade) || 1
+                }));
+
+                const response = await fetch("calcular-frete.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        to: { postal_code: cep },
+                        products: produtosAPI
+                    }),
+                });
+
+                const resultado = await response.json();
+                
+                if (resultado.erro || !Array.isArray(resultado.data)) {
+                    resultadoFrete.innerHTML = `<p style="color: red;">Erro ao calcular frete: ${resultado.erro || 'Resposta inválida'}.</p>`;
+                    console.error("Erro do backend PHP:", resultado);
+                    atualizarResumoValores();
+                    return;
+                }
+                
+                mostrarFretes(resultado.data);
+            } catch (error) {
+                console.error("Erro fatal no cálculo do frete:", error);
+                resultadoFrete.innerHTML = "<p style='color: red;'>Erro grave ao calcular frete.</p>";
+                atualizarResumoValores();
+            }
+        }
+
+        function mostrarFretes(fretes) {
+            if (!fretes || fretes.length === 0) {
+                resultadoFrete.innerHTML = "<p>Nenhuma opção de frete encontrada para este CEP e produtos.</p>";
+                btnFinalizar.disabled = true;
+                atualizarResumoValores();
+                return;
+            }
+
+            let html = '<div id="opcoes-frete"><h3>Escolha uma opção de frete:</h3>';
+
+            fretes.forEach((frete, i) => {
+                const prazo = frete.delivery_time ? `${frete.delivery_time} dias úteis` : 'Prazo não disponível';
+                html += `
+                    <div class="frete-opcao">
+                        <input type="radio" id="frete${i}" name="freteRadio" value="${frete.name}"
+                               onchange="selecionarFrete(${frete.price}, '${frete.name}', '${prazo}', '${frete.company}')" />
+                        <label for="frete${i}">
+                            <div class="frete-info">
+                                <strong>${frete.name} (${frete.company})</strong>
+                                <span>R$ ${parseFloat(frete.price).toFixed(2)} - Prazo: ${prazo}</span>
+                            </div>
+                        </label>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            resultadoFrete.innerHTML = html;
+            btnFinalizar.disabled = true;
+            freteSelecionado = null;
+            atualizarResumoValores();
+        }
+
+        function selecionarFrete(precoFrete, nomeFrete, prazoFrete, empresaFrete) {
+            freteSelecionado = { preco: precoFrete, nome: nomeFrete, prazo: prazoFrete, empresa: empresaFrete };
+            document.getElementById("frete-escolhido").value = `${nomeFrete} (${empresaFrete}) - R$ ${precoFrete.toFixed(2)} - Prazo: ${prazoFrete}`;
+            atualizarResumoValores();
+            btnFinalizar.disabled = false;
+        }
+
+        // Nova função para atualizar a seção de resumo de valores
+        function atualizarResumoValores() {
+            const totalFrete = freteSelecionado ? freteSelecionado.preco : 0;
+            const totalGeral = totalProdutos + totalFrete;
+
+            totalProdutosResumo.innerHTML = `<span>Total dos Produtos:</span> <span>R$ ${totalProdutos.toFixed(2)}</span>`;
+            
+            if (freteSelecionado) {
+                freteResumo.innerHTML = `<span>Frete (${freteSelecionado.nome}):</span> <span>R$ ${totalFrete.toFixed(2)}</span>`;
+                totalGeralResumo.innerHTML = `<span>Total a pagar:</span> <span>R$ ${totalGeral.toFixed(2)}</span>`;
+            } else {
+                freteResumo.innerHTML = `<span>Frete:</span> <span>Calculando...</span>`;
+                totalGeralResumo.innerHTML = `<span>Total a pagar:</span> <span>R$ ${totalProdutos.toFixed(2)}</span>`;
+            }
+        }
+
+        document.getElementById("checkout-form").addEventListener("submit", function (e) {
+            const form = e.target;
+            const camposObrigatorios = form.querySelectorAll('input[required]');
+            let formValido = true;
+
+            camposObrigatorios.forEach(campo => {
+                if (campo.value.trim() === '') {
+                    campo.classList.add('invalid-field');
+                    formValido = false;
+                } else {
+                    campo.classList.remove('invalid-field');
+                }
+            });
+
+            if (!formValido) {
+                e.preventDefault();
+                alert("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+
+            if (!freteSelecionado) {
+                alert("Por favor, escolha uma opção de frete para finalizar a compra.");
+                e.preventDefault();
+                return;
+            }
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio! Não é possível finalizar a compra.");
+                e.preventDefault();
+                return;
+            }
+            prepararPedido();
+        });
+
+        function prepararPedido() {
+            const form = document.getElementById("checkout-form");
+            document.querySelectorAll("#input-produtos, #input-total, #input-frete-detalhes").forEach(el => el.remove());
+
+            const totalGeral = (totalProdutos + (freteSelecionado ? freteSelecionado.preco : 0)).toFixed(2);
+            
+            const produtosInput = document.createElement("input");
+            produtosInput.type = "hidden";
+            produtosInput.name = "produtos";
+            produtosInput.value = JSON.stringify(carrinho.map(item => ({
+                nome: item.nome,
+                quantidade: item.quantidade,
+                precoUnitario: item.preco,
+                imagem: item.imagem,
+                id: item.id
+            })));
+            produtosInput.id = "input-produtos";
+            form.appendChild(produtosInput);
+
+            const totalInput = document.createElement("input");
+            totalInput.type = "hidden";
+            totalInput.name = "total";
+            totalInput.value = totalGeral;
+            totalInput.id = "input-total";
+            form.appendChild(totalInput);
+
+            const freteDetalhesInput = document.createElement("input");
+            freteDetalhesInput.type = "hidden";
+            freteDetalhesInput.name = "freteDetalhes";
+            freteDetalhesInput.value = JSON.stringify(freteSelecionado);
+            freteDetalhesInput.id = "input-frete-detalhes";
+            form.appendChild(freteDetalhesInput);
+        }
+
+        atualizarCarrinhoVisual();
+
+        cepInput.addEventListener('input', debounce(function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 5) {
+                value = value.substring(0, 5) + '-' + value.substring(5, 8);
+            }
+            e.target.value = value;
+            
+            if (value.length === 9) {
+                const cepLimpo = value.replace(/\D/g, '');
+                buscarEndereco(cepLimpo);
+                recalcularFreteSePuder();
+            } else {
+                ruaInput.value = '';
+                bairroInput.value = '';
+                cidadeInput.value = '';
+                estadoInput.value = '';
+                resultadoFrete.innerHTML = "<p>Digite seu CEP para calcular o frete.</p>";
+                atualizarResumoValores();
+            }
+        }, 500));
+    </script>
 </body>
+</html>
 
 </html>
+
